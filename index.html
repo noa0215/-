@@ -5,32 +5,36 @@
   <title>うちの子コンシェルジュ 登録ページ</title>
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script>
-    const LIFF_ID = "2007714606-KZlRDoDw"; // ← 本物のLIFF ID
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbxRUd7UPJef-zzSh52sDbdjgMdvtjStJoeKvZbQREF4sKXNpVYFlrV8cQUf-mGsaURL/exec"; // ← 本物のGAS WebアプリURL
+    console.log("🔵 LIFF開始");
 
-    async function main() {
-      await liff.init({ liffId: LIFF_ID });
-      if (!liff.isLoggedIn()) {
-        liff.login();
-        return;
-      }
+    await liff.init({ liffId: LIFF_ID });
+    console.log("🟢 LIFF初期化完了");
 
-      const profile = await liff.getProfile();
-      const userId = profile.userId;
-
-      // userIdをGASに送信
-      fetch(GAS_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId })
-      }).then(() => {
-        // Googleフォームにリダイレクト
-        window.location.href = "https://forms.gle/D1xXTAmrYYknzhBV7"; // ← ここにあなたのフォームURLをセット
-      }).catch(err => {
-        console.error("GAS送信エラー:", err);
-        alert("エラーが発生しました。しばらくしてからお試しください。");
-      });
+    if (!liff.isLoggedIn()) {
+      console.log("🟡 未ログイン。ログイン開始");
+      liff.login();
+      return;
     }
+
+    console.log("🟢 ログイン済み。プロフィール取得中…");
+    const profile = await liff.getProfile();
+    console.log("🟢 プロフィール取得成功", profile);
+
+    const userId = profile.userId;
+
+    fetch(GAS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId })
+    }).then(() => {
+      console.log("✅ userIdを送信し、Googleフォームへ移動します");
+      window.location.href = "https://forms.gle/D1xXTAmrYYknzhBV7";
+    }).catch(err => {
+      console.error("❌ GAS送信エラー:", err);
+      alert("エラーが発生しました。しばらくしてからお試しください。");
+    });
+  }
+
 
     main();
   </script>
