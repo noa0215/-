@@ -5,7 +5,7 @@
   <title>うちの子コンシェルジュ 登録ページ</title>
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script>
-    const LIFF_ID = "2007714606-KZlRDoDw"; // ← ここは本物のLIFF IDです
+    const LIFF_ID = "2007714606-KZlRDoDw"; // ← 本物のLIFF ID
     const GAS_URL = "https://script.google.com/macros/s/AKfycbxRUd7UPJef-zzSh52sDbdjgMdvtjStJoeKvZbQREF4sKXNpVYFlrV8cQUf-mGsaURL/exec"; // ← 本物のGAS WebアプリURL
 
     async function main() {
@@ -25,7 +25,7 @@
         body: JSON.stringify({ userId })
       }).then(() => {
         // Googleフォームにリダイレクト
-        window.location.href = "https://forms.gle/J4vp59NhqAcJ28DX8"; // ← ご自身のフォームURL
+        window.location.href = "https://forms.gle/D1xXTAmrYYknzhBV7"; // ← ここにあなたのフォームURLをセット
       }).catch(err => {
         console.error("GAS送信エラー:", err);
         alert("エラーが発生しました。しばらくしてからお試しください。");
