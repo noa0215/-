@@ -6,38 +6,42 @@
   <!-- LIFF SDKの読み込み -->
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   
-  <!-- ESモジュール形式でLIFFを使用 -->
+  <!-- LIFF処理コード（ESモジュール） -->
   <script type="module">
     console.log("LIFF開始");
 
-    const LIFF_ID = "2007714606-KZlRDoDw"; // ← あなたのLIFF ID（OK）
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbwU6uN8kFRk2UIktbbb1JmioRYZPm4Z1p4KWLV-wWGBs_iAfozW5YtPqBq2YwDJDm2Vjw/exec"; // ← あなたのGASのURL（OK）
+    // 必要なIDやURLをここに設定
+    const LIFF_ID = "2007714606-KZlRDoDw"; // ← ご自身のLIFF ID
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyfoStSzctqVtrMTeEkjEOECQOkR5KZqjhETf3mf-zcad1DHKziCOy1klvRlDtOxyRFbg/exec"; // ← ご自身のGAS WebアプリURL
+    const FORM_URL = "https://forms.gle/D1xXTAmrYYknzhBV7"; // ← GoogleフォームURL
 
     try {
+      // LIFF初期化
       await liff.init({ liffId: LIFF_ID });
       console.log("LIFF初期化完了");
 
+      // 未ログインならログインさせる
       if (!liff.isLoggedIn()) {
-        console.log("未ログイン、ログイン開始");
+        console.log("未ログイン → ログイン開始");
         liff.login();
       } else {
-        console.log("ログイン済み、プロフィール取得中...");
+        console.log("ログイン済み → プロフィール取得");
         const profile = await liff.getProfile();
         console.log("プロフィール取得成功:", profile);
 
         const userId = profile.userId;
 
-        // Google Apps ScriptにuserIdを送信
-        await fetch(GAS_URL, {
+        // GASにuserId送信
+        const response = await fetch(GAS_URL, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json"
+          },
           body: JSON.stringify({ userId })
         });
 
-        console.log("GASへの送信完了。Googleフォームへリダイレクトします。");
-
-        // Googleフォームへ遷移（必要に応じてフォームURLを変えてください）
-        window.location.href = "https://forms.gle/D1xXTAmrYYknzhBV7";
+        console.log("GASへの送信完了。フォームへ移動します");
+        window.location.href = FORM_URL;
       }
     } catch (err) {
       console.error("エラー:", err);
@@ -49,6 +53,3 @@
   <p>LINEでログイン中です。Googleフォームに移動します...</p>
 </body>
 </html>
-
-
-
