@@ -5,8 +5,8 @@
   <title>うちの子コンシェルジュ 登録ページ</title>
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script>
-    const LIFF_ID = "2007714606-KZlRDoDw"; // ← あなたのLIFF IDに置き換え
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbxRUd7UPJef-zzSh52sDbdjgMdvtjStJoeKvZbQREF4sKXNpVYFlrV8cQUf-mGsaURL/exec"; // ← GASのURLに置き換え
+    const LIFF_ID = "2007714606-KZlRDoDw"; // ← ここは本物のLIFF IDです
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbxRUd7UPJef-zzSh52sDbdjgMdvtjStJoeKvZbQREF4sKXNpVYFlrV8cQUf-mGsaURL/exec"; // ← 本物のGAS WebアプリURL
 
     async function main() {
       await liff.init({ liffId: LIFF_ID });
@@ -14,17 +14,21 @@
         liff.login();
         return;
       }
+
       const profile = await liff.getProfile();
       const userId = profile.userId;
 
-      // Google Apps ScriptにuserIdを送信
+      // userIdをGASに送信
       fetch(GAS_URL, {
         method: "POST",
-        body: JSON.stringify({ userId }),
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId })
       }).then(() => {
         // Googleフォームにリダイレクト
-        window.location.href = "https://forms.gle/aNHW7ZXpiSi46d3r8"; // ← 実際のフォームURLに置き換え
+        window.location.href = "https://forms.gle/J4vp59NhqAcJ28DX8"; // ← ご自身のフォームURL
+      }).catch(err => {
+        console.error("GAS送信エラー:", err);
+        alert("エラーが発生しました。しばらくしてからお試しください。");
       });
     }
 
@@ -34,6 +38,6 @@
 <body>
   <p>LINEでログイン中です。Googleフォームに移動します...</p>
 </body>
-</html>　これで正しいですか？
+</html>
 
 
