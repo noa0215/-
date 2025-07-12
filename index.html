@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <title>うちの子コンシェルジュ 登録ページ</title>
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-  <script>
-    const LIFF_ID = "2007714606-KZlRDoDw"; // ← あなたのLIFF ID
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbxRUd7UPJef-zzSh52sDbdjgMdvtjStJoeKvZbQREF4sKXNpVYFlrV8cQUf-mGsaURL/exec"; // ← あなたのGAS URL
+  <script type="module">
+    const LIFF_ID = "2007714606-KZlRDoDw";
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbxRUd7UPJef-zzSh52sDbdjgMdvtjStJoeKvZbQREF4sKXNpVYFlrV8cQUf-mGsaURL/exec";
 
     async function main() {
       console.log("LIFF開始");
@@ -35,7 +35,7 @@
         });
 
         console.log("GASに送信完了。Googleフォームへリダイレクト");
-        window.location.href = "https://forms.gle/D1xXTAmrYYknzhBV7"; // ← あなたのGoogleフォームURL
+        window.location.href = "https://forms.gle/D1xXTAmrYYknzhBV7";
 
       } catch (error) {
         console.error("main()内でエラー発生:", error);
